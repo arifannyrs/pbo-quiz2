@@ -17,14 +17,14 @@ public class ComboTransaksi {
     
     //CONSTRUCTOR
     public ComboTransaksi() {
-        this.itemadd.put("Gula", new Float(15000));
-        this.itemadd.put("Kopi", new Float(25000));
-        this.itemadd.put("Susu", new Float(40000));
+        this.itemadd.put("Gula", new Float(10500));
+        this.itemadd.put("Kopi", new Float(2500));
+        this.itemadd.put("Susu", new Float(4000));
         
     }
    
     //METHOD ARRAYLIST UNTUK MENAMBAH ITEM BERDASAR NAMA
-    public ArrayList <String> getNama(){
+    public ArrayList <String> getNamas(){
         ArrayList<String> string = new ArrayList<>();
         for(String item : this.itemadd.keySet()){
             string.add(item);
@@ -33,7 +33,7 @@ public class ComboTransaksi {
     }
     
     //METHOD ARRAYLIST UNTUK MENAMBAHKAN HARGA PADA ITEM
-    public ArrayList<Float> getHarga(){
+    public ArrayList<Float> getHargas(){
         ArrayList<Float> flo = new ArrayList<>();
         for(float item : this.itemadd.values()){
             flo.add(item);
