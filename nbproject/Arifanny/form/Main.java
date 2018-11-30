@@ -22,14 +22,14 @@ public class Main extends javax.swing.JFrame {
     private String kode;
     private final DefaultComboBoxModel BModel;
     private final DefaultTableModel TModel;
-    private final ArrayList<Item> pesan = new ArrayList<>();
+    private final ArrayList<Item> DaftarBelanja = new ArrayList<>();
         
     /**
      * Creates new form Transaksi
      */
     public Main() {
         ComboTransaksi comboTransaksi = new ComboTransaksi();
-        this.BModel = new DefaultComboBoxModel<>(comboTransaksi.getNama().toArray());
+        this.BModel = new DefaultComboBoxModel<>(comboTransaksi.getNamas().toArray());
         TabelBeli tabel = new TabelBeli();
         this.TModel = new DefaultTableModel(tabel.getKolomNama(), 0);
         initComponents();
@@ -53,13 +53,15 @@ public class Main extends javax.swing.JFrame {
     private Object [] addItem (String nama, int jumlah){
         float harga = 0;
         ComboTransaksi itemadd = new ComboTransaksi();
-        for(int i = 0; i< itemadd.getNama().size(); i++){
-            if(nama.equalsIgnoreCase(itemadd.getNama().get(i))){
-                harga = itemadd.getHarga().get(i);
+        for(int i = 0; i< itemadd.getNamas().size(); i++){
+            if(nama.equalsIgnoreCase(itemadd.getNamas().get(i))){
+                harga = itemadd.getHargas().get(i);
             }
         }
         Object [] o ={
-            nama, harga, jumlah,
+            nama, 
+            harga, 
+            jumlah,
         };
         return o;
     }
@@ -95,7 +97,7 @@ public class Main extends javax.swing.JFrame {
         return this.Tabel.getModel().getRowCount() <= 0;
     }
     
-    private void pesan(){
+    private void DaftarBelanja(){
         if(isEmpty()){
             this.Simpan.setEnabled(false);
             this.Hapus.setEnabled(false);
@@ -114,7 +116,7 @@ public class Main extends javax.swing.JFrame {
         this.Simpan.setEnabled(false);
         this.Add.setEnabled(false);
         this.ItemBox.setEnabled(false);
-        this.pesan.clear();
+        this.DaftarBelanja.clear();
         this.TModel.setRowCount(0);
         
     }
@@ -159,7 +161,7 @@ public class Main extends javax.swing.JFrame {
 
         ItemLabel.setText("Item");
 
-        ItemBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String []{"Kopi", "Susu", "Gula"}));
+        ItemBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gula", "Kopi", "Susu" }));
         ItemBox.setSelectedIndex(-1);
         ItemBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,6 +176,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         Add.setText("Add");
+        Add.setEnabled(false);
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddActionPerformed(evt);
@@ -185,6 +188,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Tabel);
 
         Hapus.setText("Hapus");
+        Hapus.setEnabled(false);
         Hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HapusActionPerformed(evt);
@@ -192,6 +196,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         Simpan.setText("Simpan");
+        Simpan.setEnabled(false);
         Simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SimpanActionPerformed(evt);
@@ -199,6 +204,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         Batal.setText("Batal");
+        Batal.setEnabled(false);
         Batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BatalActionPerformed(evt);
@@ -290,9 +296,9 @@ public class Main extends javax.swing.JFrame {
                 String nama = TModel.getValueAt (i, 0).toString();
                 float harga = new Float (TModel.getValueAt(i, 1).toString());
                 int jumlah = new Integer (TModel.getValueAt (i, 2).toString());
-                this.pesan.add(new Item(nama,harga, jumlah));
+                this.DaftarBelanja.add(new Item(nama,harga, jumlah));
             }
-            Transaksi T = new Transaksi (this.kode, this.pesan);
+            Transaksi T = new Transaksi (this.kode, this.DaftarBelanja);
             StringBuilder SB = new StringBuilder();
             SB.append(T.CetakHasil());
             JOptionPane.showMessageDialog(this, SB, "Transaksi",JOptionPane.INFORMATION_MESSAGE);
@@ -322,7 +328,7 @@ public class Main extends javax.swing.JFrame {
         }else{
             TModel.addRow(addItem(nama, jumlah));
         }
-        this.pesan();
+        this.DaftarBelanja();
     }//GEN-LAST:event_AddActionPerformed
 
     private void BatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatalActionPerformed
