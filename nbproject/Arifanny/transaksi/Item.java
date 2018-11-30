@@ -50,13 +50,14 @@ public class Item {
         this.jumlah = jumlah;
     }
     
+    //METHOD UNTUK MENGHITUNG HASIL DARI ITEM DIKAI JUMLAH
+    public float getTotal(){
+        return this.harga * this.jumlah;
+    }
+    
     //METHOD OUTPUT
     public String toString(){
         return this.nama;
     }
     
-    //METHOD UNTUK MENGHITUNG HASIL DARI ITEM DIKAI JUMLAH
-    public float getTotal(){
-        return this.harga * this.jumlah;
-    }
 }
