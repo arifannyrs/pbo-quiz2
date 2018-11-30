@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Arifanny Ramadhan Sukma | arifannyrs@gmail.com
  */
 public class TabelBeli extends DefaultTableModel {
-    //KOLOM STRING ARRAY UNTUK MENYIMPAN NAMA KOLOM
+    //KOLOM ARRAY UNTUK MENYIMPAN NAMA KOLOM
     private String [] kolom;
     
     //CONSTRUCTOR

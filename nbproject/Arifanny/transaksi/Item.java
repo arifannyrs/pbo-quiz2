@@ -13,12 +13,13 @@ public class Item {
     private String nama;
     private float harga;
     private int jumlah;
+    //VARIABLE NAMA, HARGA, JUMLAH DARI ITEM
 
     //CONSTRUCTOR DEFAULT
     public Item() {
     }
 
-    //CONSTRUCTOR BERPARAMETER NAMA, HARGA, JUMLAH
+    //CONSTRUCTOR BERPARAMETER
     public Item(String nama, float harga, int jumlah) {
         this.nama = nama;
         this.harga = harga;

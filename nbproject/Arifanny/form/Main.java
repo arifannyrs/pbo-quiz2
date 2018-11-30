@@ -18,15 +18,17 @@ import java.text.SimpleDateFormat;
  * @author Arifanny Ramadhan Sukma | arifannyrs@gmail.com
  */
 public class Main extends javax.swing.JFrame {
-    private int id = 0;
-    private String kode;
-    private final DefaultComboBoxModel BModel;
-    private final DefaultTableModel TModel;
+    private int id = 0;//VARIABLE UNTUK ID TRANSAKSI
+    private String kode;//VARIABLE UNTUK TRANSAKSI KODE
+    private final DefaultComboBoxModel BModel;//COMBOBOX MODEL
+    private final DefaultTableModel TModel;//TABLE MODEL
     private final ArrayList<Item> DaftarBelanja = new ArrayList<>();
+    //VARIABLE UNTUK MENAMPILKAN TRANSAKSI
         
     /**
      * Creates new form Transaksi
      */
+    //CONSTRUCTOR
     public Main() {
         ComboTransaksi comboTransaksi = new ComboTransaksi();
         this.BModel = new DefaultComboBoxModel<>(comboTransaksi.getNamas().toArray());
@@ -35,21 +37,26 @@ public class Main extends javax.swing.JFrame {
         initComponents();
     }
     
+    //METHOD UNTUK MENAMBAHKAN ID
     private void inid(){
         this.id -=1;
     }
     
+    //METHOD UNTUK MENGURANGI ID
     private void deid(){
         this.id -=1;
     }
     
+    //MENGATUR FUNGSI KODE
     private String setKode(){
         this.inid();
+        //UNTUK MENAMPILKAN TANGGAL OTOMATIS
         String SDF = new SimpleDateFormat("yyMMdd").format(new Date());
         this.kode = String.format(SDF+"%02d", this.id);
         return kode;
     }
     
+    //METHOD UNTUK MENYIMPAN ITEM NAMA, HARGA, JUMLAH
     private Object [] addItem (String nama, int jumlah){
         float harga = 0;
         ComboTransaksi itemadd = new ComboTransaksi();
@@ -66,6 +73,7 @@ public class Main extends javax.swing.JFrame {
         return o;
     }
     
+    //METHOD UNTUK MENAMBAH JUMLAH ITEM
     private void updatejumlah(String nama, int add){
         ArrayList<String> item = new ArrayList<>();
         for (int i = 0; i < TModel.getRowCount(); i++){
@@ -79,6 +87,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
      
+    //METHOD UNTUK MENGECEK APAKAH ADA KESAMAAN
     private boolean isDuplicate(String nama){
         boolean result = false;
         ArrayList <String> item = new ArrayList<>();
@@ -93,10 +102,12 @@ public class Main extends javax.swing.JFrame {
         return result;
     }
     
+    //mETHOD UNTUK MENGECEK BILA ADA TABEL YANG KOSONG
     private boolean isEmpty(){
         return this.Tabel.getModel().getRowCount() <= 0;
     }
     
+    //METHOD UNTUK MENONAKTIFKAN TOMBOL REMOVE DAN SAVE BILA ADA TABEL YANG MASIH KOSONG
     private void DaftarBelanja(){
         if(isEmpty()){
             this.Simpan.setEnabled(false);
@@ -107,6 +118,8 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+    
+    //METHOD UNTUK TRANSAKSI SELANJUTNYA
     private void TransaksiBaru(){
         this.Jumlah.setText("");
         this.Baru.setEnabled(true);
@@ -278,10 +291,13 @@ public class Main extends javax.swing.JFrame {
 
     private void HapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusActionPerformed
         // TODO add your handling code here:
+        //UNTUK MENGECEK APAKAH ADA BARIS YANG DIPILIH
         if(Tabel.getSelectedRow()<0){
+            //JIKA TIDAK ADA
             String SB ="Pilih Item yang ingin Dihapus";
             JOptionPane.showMessageDialog(this, SB, "Informasi", JOptionPane.INFORMATION_MESSAGE);
         }else{
+            //JIKA ADA AKAN DIHAPUS
             int count=Tabel.getSelectedRows().length;
             for (int i = 0; i< count; i++){
                 TModel.removeRow(Tabel.getSelectedRow());
@@ -292,17 +308,21 @@ public class Main extends javax.swing.JFrame {
     private void SimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanActionPerformed
         // TODO add your handling code here:
         try{
+            //LOOPING
             for (int i = 0; i < TModel.getRowCount(); i++){
                 String nama = TModel.getValueAt (i, 0).toString();
                 float harga = new Float (TModel.getValueAt(i, 1).toString());
                 int jumlah = new Integer (TModel.getValueAt (i, 2).toString());
                 this.DaftarBelanja.add(new Item(nama,harga, jumlah));
+                //MENYIMPAN NAMA ITEM DAN JUMLAH 
             }
+            //INSTANSIASI KELAS TRANSAKSI
             Transaksi T = new Transaksi (this.kode, this.DaftarBelanja);
             StringBuilder SB = new StringBuilder();
+            //MENAMPILKAN HASIL TRANSAKSI
             SB.append(T.CetakHasil());
             JOptionPane.showMessageDialog(this, SB, "Transaksi",JOptionPane.INFORMATION_MESSAGE);
-            TransaksiBaru();
+            TransaksiBaru();//TRANSAKSI SELANJUTNYA
         }catch(Exception e){
             System.out.println(e.getMessage());         
         }
